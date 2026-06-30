@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zain Ali — Portfolio</title>
+<meta name="description" content="Zain Ali — Engineering student at Lassonde School of Engineering, York University. Robotics, hardware, controls, embedded systems, automation, mechanical design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#08080a; --bg-rgb:8,8,10;
+    --panel:#0c0c0f;
+    --text:#f2f2f4;
+    --text2:#cfcfd6;
+    --text3:#9a9aa3;
+    --text4:#6a6a72;
+    --faint:#5b5b63;
+    --rgb:255,255,255;
+    --accent:#5b8cff;
+  }
+  [data-theme="light"] {
+    --bg:#ffffff; --bg-rgb:255,255,255;
+    --panel:#f5f5f7;
+    --text:#0c0c0e;
+    --text2:#33333a;
+    --text3:#5c5c64;
+    --text4:#7a7a82;
+    --faint:#a0a0a8;
+    --rgb:0,0,0;
+    --accent:#3a6ff0;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  html { scroll-behavior: smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Manrope',system-ui,sans-serif; -webkit-font-smoothing:antialiased; transition:background .35s ease, color .35s ease; }
+  ::selection { background:var(--accent); color:#fff; }
+  a { text-decoration:none; color:inherit; }
+  button { font-family:inherit; }
+  ul { list-style:none; }
+  img { max-width:100%; display:block; }
+
+  @keyframes scrollLeft { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @keyframes scrollRight { from{transform:translateX(-50%);} to{transform:translateX(0);} }
+  @keyframes cueBob { 0%,100%{transform:translateY(0); opacity:.5;} 50%{transform:translateY(7px); opacity:1;} }
+  @keyframes gridFloat { from{background-position:0 0;} to{background-position:0 -60px;} }
+  @keyframes spinCW { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+  @keyframes spinCCW { from{transform:rotate(0deg);} to{transform:rotate(-360deg);} }
+  @keyframes dashFlow { to{stroke-dashoffset:-28;} }
+  @keyframes nodePulse { 0%,100%{opacity:.25; r:3;} 50%{opacity:1; r:5;} }
+  @keyframes blink { 0%,42%,48%,100%{transform:scaleY(1);} 45%{transform:scaleY(0.08);} }
+  @keyframes wave { 0%,100%{transform:rotate(0deg);} 25%{transform:rotate(-22deg);} 60%{transform:rotate(8deg);} }
+  @keyframes bob { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-7px);} }
+  @keyframes antPulse { 0%,100%{opacity:.4; transform:scale(1);} 50%{opacity:1; transform:scale(1.5);} }
+  @keyframes scanSweep { 0%{transform:translateX(-12px); opacity:0;} 15%,85%{opacity:.7;} 100%{transform:translateX(320px); opacity:0;} }
+  @media (prefers-reduced-motion: reduce) {
+    .eng-anim *, .marq-t, [data-reveal] { animation:none !important; transition:none !important; }
+  }
+  .marq:hover .marq-t { animation-play-state: paused; }
+  ::-webkit-scrollbar { width:10px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:#1c1c22; border-radius:6px; }
+
+  [data-reveal] { opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  [data-reveal].is-visible { opacity:1; transform:none; }
+
+  /* image slot: real <img> with graceful placeholder fallback */
+  .img-slot { position:relative; overflow:hidden; background:repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(var(--rgb),0.025) 12px, rgba(var(--rgb),0.025) 24px); display:flex; align-items:center; justify-content:center; }
+  .img-slot img { width:100%; height:100%; object-fit:cover; }
+  .img-slot .ph { font-family:'JetBrains Mono',monospace; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text4); border:1px solid rgba(var(--rgb),0.14); padding:6px 14px; border-radius:999px; pointer-events:none; }
+  .img-slot img.hidden { display:none; }
+
+  .navbtn { background:none; border:none; cursor:pointer; padding:0; font-family:'Manrope',sans-serif; font-size:.86rem; font-weight:500; transition:color .2s; color:var(--text3); }
+  .navbtn.active { color:var(--text); }
+  .navbtn:hover { color:var(--text); }
+  .tag-pill { font-family:'JetBrains Mono',monospace; border:1px solid rgba(var(--rgb),0.1); padding:4px 11px; border-radius:999px; color:var(--text3); font-size:.7rem; }
+  .pagewrap { min-height:100vh; background:var(--bg); color:var(--text); overflow-x:hidden; }
+  section[data-screen] { display:none; }
+  section[data-screen].active { display:block; }
+</style>
+</head>
+<body>
+<div id="app" class="pagewrap">
+
+  <!-- NAV -->
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:60; background:rgba(var(--bg-rgb),0.72); backdrop-filter:blur(14px); border-bottom:1px solid rgba(var(--rgb),0.06);">
+    <div style="max-width:1120px; margin:0 auto; padding:14px 28px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;">
+      <button class="js-go" data-view="home" style="background:none; border:none; cursor:pointer; padding:0; text-align:left; display:flex; align-items:baseline; gap:10px;">
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1rem; letter-spacing:-0.01em; color:var(--text);">Zain Ali</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--text4); letter-spacing:.04em;">// my portfolio</span>
+      </button>
+      <div style="display:flex; gap:26px; align-items:center; flex-wrap:wrap;">
+        <div id="navItems" style="display:flex; gap:22px; align-items:center; flex-wrap:wrap;"></div>
+        <button id="themeToggle" title="Toggle theme" style="background:none; border:1px solid rgba(var(--rgb),0.14); cursor:pointer; width:34px; height:34px; border-radius:999px; display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:.95rem; transition:border-color .2s, color .2s;">☾</button>
+        <a href="resume.pdf" target="_blank" rel="noopener" style="font-family:'Space Grotesk',sans-serif; font-size:.78rem; font-weight:500; color:var(--bg); background:var(--text); padding:7px 16px; border-radius:999px;">Resume</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HOME ================= -->
+  <section data-screen="home">
+    <section style="position:relative; height:128vh;">
+      <div id="heroInner" style="position:sticky; top:0; height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:0 28px; will-change:transform,opacity;">
+        <div style="position:absolute; inset:0; pointer-events:none; background-image:linear-gradient(rgba(var(--rgb),0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(var(--rgb),0.04) 1px, transparent 1px); background-size:60px 60px; -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%); mask-image:radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%); animation:gridFloat 14s linear infinite;"></div>
+        <div style="position:absolute; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle, rgba(91,140,255,0.16), transparent 65%); filter:blur(20px); pointer-events:none;"></div>
+
+        <div style="position:relative; z-index:2; max-width:880px;">
+          <p style="font-family:'JetBrains Mono',monospace; font-size:.74rem; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin:0 0 26px;">Robotics · Hardware · Mechanical</p>
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(3rem,9vw,6.5rem); line-height:.98; letter-spacing:-0.03em; margin:0; color:var(--text);">Zain Ali</h1>
+          <p style="max-width:620px; margin:30px auto 0; font-size:clamp(1rem,2.2vw,1.3rem); line-height:1.5; color:var(--text3); font-weight:400;">I am an Engineering student at The Lassonde School of Engineering (York University) with interests in hardware, robotics, controls, embedded systems, automation, mechanical design and software. This portfolio showcases my projects, case studies, experience, and who I am.</p>
+          <div style="display:flex; gap:14px; justify-content:center; margin-top:42px; flex-wrap:wrap;">
+            <button class="js-go" data-view="work" style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:.9rem; color:var(--bg); background:var(--text); border:none; cursor:pointer; padding:13px 26px; border-radius:999px;">View work →</button>
+            <button class="js-go" data-view="contact" style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:.9rem; color:var(--text); background:transparent; border:1px solid rgba(var(--rgb),0.16); cursor:pointer; padding:13px 26px; border-radius:999px;">Get in touch</button>
+          </div>
+        </div>
+
+        <div style="position:absolute; bottom:42px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--text4);">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase;">scroll</span>
+          <span style="font-size:1rem; animation:cueBob 1.8s ease-in-out infinite;">↓</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENGINEERING WIREFRAME SCENE -->
+    <section style="position:relative; z-index:5; background:var(--bg); max-width:1080px; margin:0 auto; padding:0 28px 120px; text-align:center;">
+      <div class="eng-anim" data-reveal>
+        <svg viewBox="0 0 1000 380" style="display:block; width:100%; height:auto; max-height:420px; overflow:visible;">
+          <defs>
+            <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="var(--accent)" stop-opacity="0"></stop>
+              <stop offset="0.5" stop-color="var(--accent)" stop-opacity="0.85"></stop>
+              <stop offset="1" stop-color="var(--accent)" stop-opacity="0"></stop>
+            </linearGradient>
+            <clipPath id="boardClip"><rect x="360" y="90" width="300" height="210" rx="10"></rect></clipPath>
+          </defs>
+          <g style="transform-origin:140px 160px; animation:spinCW 14s linear infinite;">
+            <path transform="translate(140,160)" d="M41.98,1.44 L53.65,6.16 L52.98,10.42 L40.43,11.37 L34.53,23.90 L41.80,34.18 L38.94,37.41 L27.86,31.43 L16.13,38.78 L16.69,51.36 L12.53,52.53 L6.45,41.50 L-7.40,41.34 L-13.73,52.23 L-17.86,50.96 L-17.01,38.40 L-28.58,30.78 L-39.78,36.51 L-42.57,33.22 L-35.07,23.11 L-40.68,10.44 L-53.21,9.21 L-53.77,4.93 L-42.00,0.48 L-39.87,-13.21 L-49.74,-21.02 L-47.90,-24.93 L-35.59,-22.30 L-26.40,-32.67 L-30.48,-44.58 L-26.82,-46.87 L-17.88,-38.00 L-4.55,-41.75 L-1.54,-53.98 L2.77,-53.93 L5.50,-41.64 L18.75,-37.58 L27.89,-46.24 L31.49,-43.87 L27.14,-32.05 L36.09,-21.48 L48.46,-23.83 L50.21,-19.88 L40.16,-12.29 Z" fill="none" style="stroke:rgba(var(--rgb),0.32)" stroke-width="2" stroke-linejoin="round"></path>
+            <circle cx="140" cy="160" r="24" fill="none" style="stroke:rgba(var(--rgb),0.30)" stroke-width="2"></circle>
+            <circle cx="140" cy="160" r="13" fill="none" style="stroke:rgba(var(--rgb),0.22)" stroke-width="2"></circle>
+            <circle cx="140" cy="160" r="4" style="fill:var(--accent)"></circle>
+          </g>
+          <g style="transform-origin:243px 228px; animation:spinCCW 9.5s linear infinite;">
+            <path transform="translate(243,228)" d="M29.97,1.26 L39.61,5.57 L38.88,9.41 L28.33,9.87 L22.15,20.23 L26.77,29.73 L23.74,32.20 L15.36,25.77 L3.97,29.74 L1.40,39.98 L-2.51,39.92 L-4.80,29.61 L-16.07,25.33 L-24.63,31.52 L-27.58,28.97 L-22.71,19.60 L-28.60,9.07 L-39.13,8.32 L-39.75,4.46 L-30.00,0.42 L-27.74,-11.43 L-35.32,-18.78 L-33.32,-22.14 L-23.25,-18.96 L-13.90,-26.59 L-14.98,-37.09 L-11.29,-38.37 L-5.62,-29.47 L6.44,-29.30 L12.36,-38.04 L16.01,-36.65 L14.64,-26.19 L23.77,-18.30 L33.92,-21.20 L35.83,-17.79 L28.04,-10.65 Z" fill="none" style="stroke:rgba(var(--rgb),0.28)" stroke-width="2" stroke-linejoin="round"></path>
+            <circle cx="243" cy="228" r="17" fill="none" style="stroke:rgba(var(--rgb),0.26)" stroke-width="2"></circle>
+            <circle cx="243" cy="228" r="3.5" style="fill:var(--accent)" opacity="0.7"></circle>
+          </g>
+          <rect x="360" y="90" width="300" height="210" rx="10" fill="none" style="stroke:rgba(var(--rgb),0.30)" stroke-width="2"></rect>
+          <rect x="360" y="90" width="300" height="210" rx="10" style="fill:var(--accent)" opacity="0.04"></rect>
+          <rect x="470" y="168" width="90" height="64" rx="6" fill="none" style="stroke:rgba(var(--rgb),0.38)" stroke-width="2"></rect>
+          <circle cx="479" cy="177" r="2.5" style="fill:rgba(var(--rgb),0.4)"></circle>
+          <g style="stroke:rgba(var(--rgb),0.32)" stroke-width="2">
+            <line x1="470" y1="184" x2="458" y2="184"></line><line x1="470" y1="200" x2="458" y2="200"></line><line x1="470" y1="216" x2="458" y2="216"></line>
+            <line x1="560" y1="184" x2="572" y2="184"></line><line x1="560" y1="200" x2="572" y2="200"></line><line x1="560" y1="216" x2="572" y2="216"></line>
+            <line x1="500" y1="168" x2="500" y2="156"></line><line x1="515" y1="168" x2="515" y2="156"></line><line x1="530" y1="168" x2="530" y2="156"></line>
+            <line x1="500" y1="232" x2="500" y2="244"></line><line x1="515" y1="232" x2="515" y2="244"></line><line x1="530" y1="232" x2="530" y2="244"></line>
+          </g>
+          <g fill="none" style="stroke:rgba(var(--rgb),0.20)" stroke-width="2">
+            <polyline points="458,184 410,184 410,124 388,124"></polyline>
+            <polyline points="458,216 400,216 400,272 440,272"></polyline>
+            <polyline points="572,184 620,184 620,128 636,128"></polyline>
+            <polyline points="572,216 632,216 632,266"></polyline>
+            <polyline points="515,156 515,118 462,118"></polyline>
+            <polyline points="515,244 515,280 596,280"></polyline>
+          </g>
+          <g fill="none" style="stroke:var(--accent)" stroke-width="2.2" stroke-dasharray="6 22" stroke-linecap="round" opacity="0.9">
+            <polyline points="458,184 410,184 410,124 388,124" style="animation:dashFlow 1.1s linear infinite;"></polyline>
+            <polyline points="458,216 400,216 400,272 440,272" style="animation:dashFlow 1.5s linear infinite;"></polyline>
+            <polyline points="572,184 620,184 620,128 636,128" style="animation:dashFlow 1.3s linear infinite;"></polyline>
+            <polyline points="572,216 632,216 632,266" style="animation:dashFlow 0.9s linear infinite;"></polyline>
+            <polyline points="515,156 515,118 462,118" style="animation:dashFlow 1.7s linear infinite;"></polyline>
+            <polyline points="515,244 515,280 596,280" style="animation:dashFlow 1.2s linear infinite;"></polyline>
+          </g>
+          <g style="fill:var(--accent)">
+            <circle cx="388" cy="124" r="4" style="animation:nodePulse 2.4s ease-in-out infinite;"></circle>
+            <circle cx="440" cy="272" r="4" style="animation:nodePulse 2.4s ease-in-out infinite .5s;"></circle>
+            <circle cx="636" cy="128" r="4" style="animation:nodePulse 2.4s ease-in-out infinite .9s;"></circle>
+            <circle cx="632" cy="266" r="4" style="animation:nodePulse 2.4s ease-in-out infinite 1.3s;"></circle>
+            <circle cx="462" cy="118" r="4" style="animation:nodePulse 2.4s ease-in-out infinite .2s;"></circle>
+            <circle cx="596" cy="280" r="4" style="animation:nodePulse 2.4s ease-in-out infinite 1.6s;"></circle>
+          </g>
+          <g clip-path="url(#boardClip)">
+            <rect x="360" y="90" width="10" height="210" fill="url(#scanGrad)" style="animation:scanSweep 4.5s ease-in-out infinite;"></rect>
+          </g>
+          <g style="transform-origin:830px 200px; animation:bob 4s ease-in-out infinite;">
+            <g transform="translate(770,96)">
+              <line x1="60" y1="20" x2="60" y2="3" style="stroke:rgba(var(--rgb),0.34)" stroke-width="2"></line>
+              <circle cx="60" cy="-1" r="5" style="fill:var(--accent); transform-box:fill-box; transform-origin:center; animation:antPulse 1.8s ease-in-out infinite;"></circle>
+              <rect x="0" y="20" width="120" height="84" rx="16" fill="none" style="stroke:rgba(var(--rgb),0.36)" stroke-width="2"></rect>
+              <circle cx="40" cy="58" r="9" style="fill:var(--accent); transform-box:fill-box; transform-origin:center; animation:blink 4.2s ease-in-out infinite;"></circle>
+              <circle cx="80" cy="58" r="9" style="fill:var(--accent); transform-box:fill-box; transform-origin:center; animation:blink 4.2s ease-in-out infinite;"></circle>
+              <rect x="42" y="84" width="36" height="8" rx="4" fill="none" style="stroke:rgba(var(--rgb),0.30)" stroke-width="2"></rect>
+              <rect x="12" y="116" width="96" height="84" rx="12" fill="none" style="stroke:rgba(var(--rgb),0.34)" stroke-width="2"></rect>
+              <rect x="34" y="134" width="52" height="20" rx="5" fill="none" style="stroke:rgba(var(--rgb),0.24)" stroke-width="2"></rect>
+              <circle cx="44" cy="174" r="4" style="fill:var(--accent)" opacity="0.7"></circle>
+              <circle cx="60" cy="174" r="4" style="fill:rgba(var(--rgb),0.3)"></circle>
+              <circle cx="76" cy="174" r="4" style="fill:rgba(var(--rgb),0.3)"></circle>
+              <polyline points="12,140 -16,156 -16,184" fill="none" style="stroke:rgba(var(--rgb),0.32)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <circle cx="-16" cy="188" r="5" fill="none" style="stroke:rgba(var(--rgb),0.32)" stroke-width="2"></circle>
+              <g style="transform-box:fill-box; transform-origin:0px 0px; animation:wave 2.6s ease-in-out infinite;">
+                <polyline points="108,140 138,128 146,104" fill="none" style="stroke:var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="147" cy="99" r="5" fill="none" style="stroke:var(--accent)" stroke-width="2.4"></circle>
+              </g>
+              <rect x="4" y="200" width="112" height="26" rx="9" fill="none" style="stroke:rgba(var(--rgb),0.30)" stroke-width="2"></rect>
+              <circle cx="32" cy="213" r="5" fill="none" style="stroke:rgba(var(--rgb),0.26)" stroke-width="2"></circle>
+              <circle cx="88" cy="213" r="5" fill="none" style="stroke:rgba(var(--rgb),0.26)" stroke-width="2"></circle>
+            </g>
+          </g>
+          <g style="stroke:rgba(var(--rgb),0.14)" stroke-width="1.5">
+            <line x1="60" y1="340" x2="940" y2="340"></line>
+            <line x1="60" y1="334" x2="60" y2="346"></line><line x1="280" y1="336" x2="280" y2="344"></line>
+            <line x1="500" y1="334" x2="500" y2="346"></line><line x1="720" y1="336" x2="720" y2="344"></line>
+            <line x1="940" y1="334" x2="940" y2="346"></line>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- SPOTLIGHT -->
+    <section style="position:relative; z-index:5; background:var(--bg); max-width:1120px; margin:0 auto; padding:120px 28px;">
+      <div data-reveal style="display:flex; align-items:center; gap:16px; margin-bottom:36px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent);">▶ Currently working on</span>
+        <span style="flex:1; height:1px; background:rgba(var(--rgb),0.08);"></span>
+      </div>
+      <div data-reveal style="display:grid; grid-template-columns:1.15fr 1fr; gap:48px; align-items:center;">
+        <div class="img-slot" style="border-radius:14px; border:1px solid rgba(var(--rgb),0.08); height:380px;">
+          <img src="images/proj-0.jpg" alt="Custom Macropad" onerror="this.classList.add('hidden'); this.nextElementSibling.style.display='flex';">
+          <span class="ph" style="display:none;">▶ drop a demo image or video frame</span>
+        </div>
+        <div>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:.7rem; letter-spacing:.08em; color:var(--text4); margin:0 0 14px;">PROJECT 01</p>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:2.1rem; letter-spacing:-0.02em; margin:0 0 16px; color:var(--text);">Custom Macropad</h2>
+          <p style="margin:0 0 24px; font-size:.98rem; line-height:1.6; color:var(--text3);">A custom macropad (keyboard) that I designed on a 2-layer PCB with a custom 3D-printed case.</p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px;">
+            <span class="tag-pill">KiCad</span><span class="tag-pill">3D Printing</span><span class="tag-pill">Firmware</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
+            <a href="https://github.com/zaina1405/Macropad" target="_blank" style="font-family:'Space Grotesk',sans-serif; font-weight:500; display:inline-flex; align-items:center; gap:8px; font-size:.9rem; color:var(--bg); background:var(--text); padding:11px 20px; border-radius:999px;"><span style="font-size:1rem;">↗</span> View on GitHub</a>
+            <button class="js-go" data-view="work" style="font-family:'Space Grotesk',sans-serif; font-weight:500; background:none; border:none; cursor:pointer; color:var(--accent); font-size:.92rem; padding:0; display:inline-flex; align-items:center; gap:8px;">Explore all work →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS MARQUEE -->
+    <section style="position:relative; z-index:5; background:var(--bg); border-top:1px solid rgba(var(--rgb),0.06); padding:60px 0;">
+      <div class="marq" style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);">
+        <div class="marq-t" id="marqueeHome" style="display:flex; gap:14px; width:max-content; animation:scrollLeft 40s linear infinite;"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="position:relative; z-index:5; background:var(--bg); padding:120px 28px; text-align:center;">
+      <h2 data-reveal style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2rem,6vw,3.4rem); letter-spacing:-0.03em; margin:0 0 24px; color:var(--text);">Let's build something.</h2>
+      <button class="js-go" data-view="contact" style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:.95rem; color:var(--bg); background:var(--text); border:none; cursor:pointer; padding:14px 30px; border-radius:999px;">Get in touch →</button>
+    </section>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section data-screen="work" style="padding:140px 28px 120px; max-width:1120px; margin:0 auto;">
+    <p style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Selected work</p>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2.4rem,7vw,4rem); letter-spacing:-0.03em; margin:0 0 12px; color:var(--text);">Projects</h1>
+    <p style="color:var(--text3); font-size:1rem; margin:0 0 56px; max-width:560px;">Personal projects that I have completed or am actively working on.</p>
+    <div id="projectGrid" style="display:grid; grid-template-columns:1fr 1fr; gap:28px;"></div>
+  </section>
+
+  <!-- ================= CASE STUDIES ================= -->
+  <section data-screen="casestudies" style="padding:140px 28px 120px; max-width:1000px; margin:0 auto;">
+    <div id="csListView">
+      <p style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Deep dives</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2.4rem,7vw,4rem); letter-spacing:-0.03em; margin:0 0 12px; color:var(--text);">Case Studies</h1>
+      <p style="color:var(--text3); font-size:1rem; margin:0 0 56px; max-width:560px;">In-depth write-ups of my best projects.</p>
+      <div id="caseStudyList" style="display:flex; flex-direction:column; gap:24px;"></div>
+    </div>
+    <div id="csDetailView" style="display:none;"></div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section data-screen="experience" style="padding:140px 28px 120px; max-width:920px; margin:0 auto;">
+    <p style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Where I've worked</p>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2.4rem,7vw,4rem); letter-spacing:-0.03em; margin:0 0 56px; color:var(--text);">Relevant experience</h1>
+    <div id="experienceList" style="display:flex; flex-direction:column;"></div>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section data-screen="skills" style="padding:140px 0 120px;">
+    <div style="max-width:1120px; margin:0 auto; padding:0 28px;">
+      <p style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Toolbox</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2.4rem,7vw,4rem); letter-spacing:-0.03em; margin:0 0 48px; color:var(--text);">Skills</h1>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:72px;">
+      <div class="marq" style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);">
+        <div class="marq-t" id="marqueeA" style="display:flex; gap:14px; width:max-content; animation:scrollLeft 38s linear infinite;"></div>
+      </div>
+      <div class="marq" style="overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent); mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);">
+        <div class="marq-t" id="marqueeB" style="display:flex; gap:14px; width:max-content; animation:scrollRight 46s linear infinite;"></div>
+      </div>
+    </div>
+    <div id="skillCats" style="max-width:1120px; margin:0 auto; padding:0 28px; display:grid; grid-template-columns:1fr 1fr; gap:24px;"></div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section data-screen="about" style="padding:140px 28px 120px; max-width:900px; margin:0 auto;">
+    <p style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Who I am</p>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2.4rem,7vw,4rem); letter-spacing:-0.03em; margin:0 0 48px; color:var(--text);">About</h1>
+    <div data-reveal style="display:grid; grid-template-columns:1fr 300px; gap:48px; align-items:start; margin-bottom:48px;">
+      <div>
+        <p style="font-family:'Space Grotesk',sans-serif; font-weight:400; font-size:clamp(1.05rem,2.2vw,1.4rem); line-height:1.6; letter-spacing:-0.01em; color:var(--text2); margin:0;">Hey, my name is Zain. I'm passionate about engineering. Ever since I was little, I've been obsessed with robots, engines, automation, basically anything that moved. I'd take things apart just to see how they worked, not always successfully putting them back together. That curiosity has stuck with me, and these days I've finally gotten the opportunity to actually build the things I used to dream about.</p>
+      </div>
+      <div style="position:relative;">
+        <div class="img-slot" style="border-radius:16px; height:360px;">
+          <img src="images/about-headshot.jpg" alt="Zain Ali" onerror="this.classList.add('hidden'); this.nextElementSibling.style.display='flex';">
+          <span class="ph" style="display:none;">Drop a headshot</span>
+        </div>
+        <span style="position:absolute; bottom:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:.64rem; letter-spacing:.08em; text-transform:uppercase; color:var(--text2); background:rgba(var(--bg-rgb),0.6); backdrop-filter:blur(6px); padding:5px 10px; border-radius:999px; pointer-events:none;">Zain Ali</span>
+      </div>
+    </div>
+    <div data-reveal id="factsGrid" style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:rgba(var(--rgb),0.08); border:1px solid rgba(var(--rgb),0.08); border-radius:14px; overflow:hidden;"></div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section data-screen="contact" style="padding:140px 28px 120px; max-width:1000px; margin:0 auto;">
+    <p style="font-family:'JetBrains Mono',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Say hello</p>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2.4rem,7vw,4rem); letter-spacing:-0.03em; margin:0 0 48px; color:var(--text);">Get in touch</h1>
+    <div style="max-width:560px;">
+      <p style="font-size:1rem; line-height:1.65; color:var(--text3); margin:0 0 32px;">Always willing to talk hardware, projects, or engineering in general. Reach out if you have any questions, want to collaborate, or just chat.</p>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <a href="mailto:zain.salman@hotmail.com" style="display:flex; align-items:center; gap:12px; color:var(--text2); font-size:.92rem;"><span style="color:var(--accent);">✉</span> zain.salman@hotmail.com <span style="font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--accent); border:1px solid rgba(91,140,255,0.4); padding:1px 7px; border-radius:999px;">preferred</span></a>
+        <a href="mailto:Zain.ali.syed124@gmail.com" style="display:flex; align-items:center; gap:12px; color:var(--text2); font-size:.92rem;"><span style="color:var(--accent);">✉</span> Zain.ali.syed124@gmail.com</a>
+        <div style="display:flex; align-items:center; gap:12px; color:var(--text2); font-size:.92rem;"><span style="color:var(--accent);">⚲</span> Toronto, ON</div>
+        <div style="display:flex; gap:20px; margin-top:8px;">
+          <a href="https://github.com/zaina1405" target="_blank" style="font-family:'JetBrains Mono',monospace; color:var(--text4); font-size:.8rem;">github ↗</a>
+          <a href="https://www.linkedin.com/in/zain-ali822/" target="_blank" style="font-family:'JetBrains Mono',monospace; color:var(--text4); font-size:.8rem;">linkedin ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="position:relative; z-index:5; background:var(--bg); border-top:1px solid rgba(var(--rgb),0.06); padding:36px 28px;">
+    <div style="max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+      <p style="font-family:'JetBrains Mono',monospace; color:var(--faint); font-size:.72rem; margin:0;">© 2026 Zain Ali</p>
+      <p style="font-family:'JetBrains Mono',monospace; color:var(--faint); font-size:.72rem; margin:0; display:flex; align-items:center; gap:7px;"><span style="color:#00d9a3;">●</span> Actively maintained · Updated June 2026</p>
+      <p style="font-family:'JetBrains Mono',monospace; color:var(--faint); font-size:.72rem; margin:0;">Toronto, ON · <span id="clock" style="color:var(--text3);">--:--:-- EST</span></p>
+    </div>
+  </footer>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(8,8,10,0.74); backdrop-filter:blur(8px); align-items:flex-start; justify-content:center; padding:40px 20px; overflow-y:auto;">
+    <div id="projectModalCard" style="max-width:760px; width:100%; margin:auto; background:var(--bg); border:1px solid rgba(var(--rgb),0.12); border-radius:18px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.5);"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- data ---------- */
+  var navDefs = [
+    { id:'about', label:'About' },
+    { id:'experience', label:'Experience' },
+    { id:'skills', label:'Skills' },
+    { id:'work', label:'Projects' },
+    { id:'casestudies', label:'Case Studies' },
+    { id:'contact', label:'Contact' }
+  ];
+
+  var projects = [
+    { title:'Custom Macropad', img:'images/proj-0.jpg', description:'A custom macropad (keyboard) that I designed on a 2-layer PCB with a custom 3D-printed case.', longDescription:'A custom macropad (keyboard) that I designed on a 2-layer PCB with a custom 3D-printed case. [Write a longer description here — the why, the build process, the components, and what you learned.]', tags:['KiCad','3D Printing','Firmware'], links:[{label:'GitHub', url:'https://github.com/zaina1405/Macropad'}] },
+    { title:'FRC Rebuilt 2026 Scouting App', img:'images/proj-1.jpg', description:'A scouting app to track other robots\u2019 performance during matches to inform alliance selection.', credit:'Built with luidevo.', tags:['HTML','Scouting','FRC'], links:[{label:'GitHub', url:'https://github.com/LUIDevo/scouting-app-2026'}] },
+    { title:'Maze Solving Robot', img:'images/proj-2.jpg', description:'An autonomous maze-solving robot that won first place at the UofT RSX SEEK hackathon.', longDescription:'A maze-solving robot that competed in the UofT RSX SEEK hackathon, winning first place. The robot used ultrasonic and infrared sensors to navigate through mazes autonomously. It also featured modified wheels and a \u201csled system\u201d to traverse over rough terrain.', tags:['Robotics','Autonomous','Sensors'], links:[] },
+    { title:'Smarter Scouting App', img:'images/proj-3.jpg', description:'Another FRC scouting app with smart features, a built-in AI assistant powered by the Gemini API, and an alliance builder.', credit:'Built with luidevo.', tags:['AI','Scouting','FRC'], links:[{label:'GitHub', url:'https://github.com/LUIDevo/frc-graphql-app'}] },
+    { title:'Smart Organization Dashboard', description:'A desktop dashboard containing a to-do list, your calendar, and other features.', tags:[], comingSoon:true },
+    { title:'Coming soon', description:'A new project is in the works — details coming soon.', tags:[], comingSoon:true }
+  ];
+
+  var caseStudies = [
+    { title:'Paperweight — FRC Robot', tagline:'FRC · 2025–2026', img:'images/cs-0.jpg', summary:'Team 6632\u2019s FRC robot for the 2025–2026 Rebuilt season.', tags:['FRC','Team 6632','Rebuilt'], writeupReady:false,
+      blocks:[
+        {type:'heading', text:'Overview'},
+        {type:'text', text:'Write a short intro to Paperweight here — what the robot had to do this season and the headline result.'},
+        {type:'image', label:'▶ drop a full-robot photo', src:'images/cs-0-1.jpg'},
+        {type:'heading', text:'The Game'},
+        {type:'text', text:'Describe the Rebuilt game objectives and how your strategy shaped the design.'},
+        {type:'heading', text:'Design & Build'},
+        {type:'text', text:'Walk through the overall architecture — drivetrain, frame, and major decisions.'},
+        {type:'text', text:'Add a second paragraph on materials, fabrication, and iterations.'},
+        {type:'image', label:'▶ drop a CAD or build photo', src:'images/cs-0-2.jpg'},
+        {type:'video', label:'▶ drop a match / reveal video thumbnail', src:'images/cs-0-video.jpg'},
+        {type:'heading', text:'Subsystems'},
+        {type:'text', text:'Detail the key subsystems you worked on — intake, scoring, climb, etc.'},
+        {type:'text', text:'Explain any tricky mechanical or electrical problems and how you solved them.'},
+        {type:'image', label:'▶ drop a subsystem close-up', src:'images/cs-0-3.jpg'},
+        {type:'heading', text:'My Role'},
+        {type:'text', text:'Describe specifically what you contributed to Paperweight.'},
+        {type:'heading', text:'Competition'},
+        {type:'text', text:'How did the robot perform at events? Awards, rankings, lessons learned.'},
+        {type:'video', label:'▶ drop a competition highlight video thumbnail', src:'images/cs-0-video2.jpg'},
+        {type:'heading', text:'Reflection'},
+        {type:'text', text:'What worked, what you would change, and what you took away from the season.'}
+      ] },
+    { title:'Ornamental — FTC Robot', tagline:'FTC · 2025', img:'images/cs-1.jpg', summary:'Team 22150\u2019s FTC robot for the 2025 FTC season, DECODE.', tags:['FTC','Team 22150','DECODE'], writeupReady:false,
+      blocks:[
+        {type:'heading', text:'Overview'},
+        {type:'text', text:'Intro to Ornamental — the DECODE season and what the robot needed to accomplish.'},
+        {type:'image', label:'▶ drop a full-robot photo', src:'images/cs-1-1.jpg'},
+        {type:'heading', text:'Design & Build'},
+        {type:'text', text:'Walk through the design approach and key build decisions.'},
+        {type:'image', label:'▶ drop a build or CAD photo', src:'images/cs-1-2.jpg'},
+        {type:'heading', text:'My Role'},
+        {type:'text', text:'Describe what you contributed to Ornamental.'},
+        {type:'heading', text:'Reflection'},
+        {type:'text', text:'Results, lessons, and what you would improve next season.'}
+      ] },
+    { title:'Project in progress', tagline:'Coming soon', img:'images/cs-2.jpg', summary:'A new case study is in the works — details coming soon.', tags:['TBD'], writeupReady:false, blocks:[] }
+  ];
+
+  var typeColor = {
+    'internship': 'color:var(--accent); border:1px solid rgba(91,140,255,0.4);',
+    'design team': 'color:#00d9a3; border:1px solid rgba(0,217,163,0.4);',
+    'robotics team': 'color:#00d9a3; border:1px solid rgba(0,217,163,0.4);',
+    'academic': 'color:#c08bff; border:1px solid rgba(192,139,255,0.4);',
+    'school club': 'color:#f5a623; border:1px solid rgba(245,166,35,0.4);'
+  };
+
+  var experiences = [
+    { role:'Team Captain', org:'Northview Robotics — FRC Team 6632', period:'Oct 2024 – Jun 2026', type:'robotics team', logo:'images/exp-0.png',
+      bullets:[
+        'One of two Team Captains of Team 6632 Northview Robotics.',
+        'Assisted in the design, assembly, manufacturing, and programming of the competition robot, which qualified for the FIRST Ontario Provincial Championship.',
+        'Organized team meetings and mentored new members in technical skills such as CAD, fabrication, and electrical.',
+        'Responsible for all of the purchasing, managing a team budget of over $35k.',
+        'Contributed to the development of team branding, documentation, and presentation materials for sponsorship and outreach.',
+        'Contributed to the team winning its first-ever Excellence in Engineering Award and Finalist Award.'
+      ] },
+    { role:'Team Captain', org:'Northview Robotics — FTC Team 22150', period:'Sep 2025 – Mar 2026', type:'robotics team', logo:'images/exp-1.png',
+      bullets:[
+        'Served as one of the captains of a small-member FTC Team 22150.',
+        'Co-founded FTC Team 22150 alongside three other members for the FIRST Tech Challenge.',
+        'Contributed to the design, assembly, and programming of the competition robot, which earned the Design Award (second place) at the Central Toronto Qualifier Competition.',
+        'Utilized 3D printing to rapidly prototype and iterate robot components.',
+        'Assisted with budgeting and ordering of team materials and components.'
+      ] },
+    { role:'Engineering Exec', org:'Steam ICAC', period:'Oct 2025 – Jun 2026', type:'school club', logo:'images/exp-2.png',
+      bullets:[
+        'Assisted 5+ groups in the development of their projects.',
+        'Used CAD and 3D printing to create working prototypes to solve real-life problems.',
+        'Contributed to teams that won first overall and third overall.'
+      ] }
+  ];
+
+  var skillCats = [
+    { label:'CAD & Design', items:['Onshape','Fusion 360','SolidWorks','AutoCAD'] },
+    { label:'Languages', items:['Python','Java','C++'] },
+    { label:'Hardware', items:['3D Printing','KiCad','Soldering','Arduino','ESP32'] },
+    { label:'Manufacturing', items:['3D Printing','CAM / CNC','Lathe','Mill','Laser Cutting','MIG Welding','General Tools'] },
+    { label:'Tools', items:['Git','GitHub','Docker','Linux / Bash','Claude Code'] },
+    { label:'Software & Productivity', items:['Google Workspace','Microsoft 365','Excel / Sheets','PowerPoint / Slides','Canva'] }
+  ];
+  var softSkills = ['Teamwork','Leadership','Communication','Problem Solving','Project Management','Public Speaking','Adaptability','Time Management'];
+
+  var facts = [
+    { key:'School', value:'Lassonde School of Engineering' },
+    { key:'Focus', value:'Robotics · Hardware · Mechanical · Automation' },
+    { key:'Based in', value:'Toronto, ON' },
+    { key:'Goal', value:'Land an engineering role in my focus areas' }
+  ];
+
+  /* ---------- state ---------- */
+  var state = { view:'home', theme: readTheme(), openCase:null };
+
+  function readTheme(){
+    try { return localStorage.getItem('za-theme') || 'dark'; } catch(e){ return 'dark'; }
+  }
+  function applyTheme(){
+    document.documentElement.setAttribute('data-theme', state.theme);
+    document.getElementById('themeToggle').textContent = state.theme === 'dark' ? '☾' : '☀';
+  }
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('za-theme', state.theme); } catch(e){}
+    applyTheme();
+  });
+
+  function imgSlot(opts){
+    // opts: {src, alt, placeholder, style}
+    return '<div class="img-slot" style="'+(opts.style||'')+'">'+
+      '<img src="'+opts.src+'" alt="'+(opts.alt||'')+'" onerror="this.classList.add(\'hidden\'); this.nextElementSibling.style.display=\'flex\';">'+
+      '<span class="ph" style="display:none;">'+(opts.placeholder||'▶ drop image')+'</span>'+
+    '</div>';
+  }
+
+  function go(view){
+    state.view = view;
+    state.openCase = null;
+    document.querySelectorAll('section[data-screen]').forEach(function(s){
+      s.classList.toggle('active', s.getAttribute('data-screen') === view);
+    });
+    document.querySelectorAll('.navbtn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-view') === view);
+    });
+    window.scrollTo(0,0);
+    if (view === 'casestudies') renderCaseStudyView();
+    requestAnimationFrame(initReveal);
+  }
+
+  /* ---------- render: nav ---------- */
+  var navItemsEl = document.getElementById('navItems');
+  navDefs.forEach(function(n){
+    var b = document.createElement('button');
+    b.className = 'navbtn';
+    b.setAttribute('data-view', n.id);
+    b.textContent = n.label;
+    b.addEventListener('click', function(){ go(n.id); });
+    navItemsEl.appendChild(b);
+  });
+  document.querySelectorAll('.js-go').forEach(function(b){
+    b.addEventListener('click', function(){ go(b.getAttribute('data-view')); });
+  });
+
+  /* ---------- render: marquees ---------- */
+  var allSkills = skillCats.reduce(function(acc, c){ return acc.concat(c.items); }, []).concat(softSkills);
+  var half = Math.ceil(allSkills.length/2);
+  var rowA = allSkills.slice(0, half), rowB = allSkills.slice(half);
+  function renderMarquee(el, items){
+    var doubled = items.concat(items);
+    el.innerHTML = doubled.map(function(m){
+      return '<span style="font-family:\'JetBrains Mono\',monospace; border:1px solid rgba(var(--rgb),0.09); padding:10px 18px; border-radius:10px; color:var(--text2); font-size:.84rem; white-space:nowrap;">'+m+'</span>';
+    }).join('');
+  }
+  renderMarquee(document.getElementById('marqueeHome'), rowA);
+  renderMarquee(document.getElementById('marqueeA'), rowA);
+  renderMarquee(document.getElementById('marqueeB'), rowB);
+
+  /* ---------- render: projects ---------- */
+  var grid = document.getElementById('projectGrid');
+  projects.forEach(function(p, i){
+    var card = document.createElement('div');
+    card.setAttribute('data-reveal', '');
+    card.style.cssText = 'border:1px solid rgba(var(--rgb),0.08); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; background:var(--panel);' + (p.comingSoon ? ' opacity:0.62;' : ' cursor:pointer;');
+    var media = p.comingSoon
+      ? '<div style="height:242px; border-bottom:1px solid rgba(var(--rgb),0.07); display:flex; align-items:center; justify-content:center; background:repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(var(--rgb),0.025) 12px, rgba(var(--rgb),0.025) 24px);"><span style="font-family:\'JetBrains Mono\',monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--text4); border:1px solid rgba(var(--rgb),0.12); padding:6px 14px; border-radius:999px;">Coming soon</span></div>'
+      : '<div style="height:242px; border-bottom:1px solid rgba(var(--rgb),0.07);">'+imgSlot({src:p.img, alt:p.title, placeholder:'▶ drop preview', style:'height:100%;'})+'</div>';
+    card.innerHTML = media +
+      '<div style="padding:24px; display:flex; flex-direction:column; flex:1;">'+
+        '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:12px;">'+
+          '<h3 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:1.15rem; letter-spacing:-0.01em; margin:0; color:var(--text);">'+p.title+'</h3>'+
+          '<span style="font-family:\'JetBrains Mono\',monospace; font-size:.68rem; color:var(--faint); white-space:nowrap;">'+String(i+1).padStart(2,'0')+' / '+String(projects.length).padStart(2,'0')+'</span>'+
+        '</div>'+
+        '<p style="margin:0 0 18px; font-size:.86rem; line-height:1.55; color:var(--text3);">'+p.description+'</p>'+
+        (p.credit ? '<p style="margin:-8px 0 18px; font-family:\'JetBrains Mono\',monospace; font-size:.68rem; line-height:1.5; color:var(--text4);">// '+p.credit+'</p>' : '')+
+        '<div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">'+
+          '<div style="display:flex; gap:7px; flex-wrap:wrap;">'+p.tags.map(function(t){ return '<span style="font-family:\'JetBrains Mono\',monospace; border:1px solid rgba(var(--rgb),0.09); padding:3px 9px; border-radius:999px; color:var(--text3); font-size:.65rem;">'+t+'</span>'; }).join('')+'</div>'+
+          (!p.comingSoon ? '<span style="font-family:\'Space Grotesk\',sans-serif; font-size:.78rem; color:var(--accent); display:inline-flex; align-items:center; gap:5px;">View project →</span>' : '')+
+        '</div>'+
+      '</div>';
+    if (!p.comingSoon) card.addEventListener('click', function(){ openProjectModal(i); });
+    grid.appendChild(card);
+  });
+
+  /* ---------- project modal ---------- */
+  var modal = document.getElementById('projectModal');
+  var modalCard = document.getElementById('projectModalCard');
+  function openProjectModal(i){
+    var p = projects[i];
+    modalCard.innerHTML =
+      '<div style="position:relative; border-bottom:1px solid rgba(var(--rgb),0.07);">'+
+        imgSlot({src:p.img, alt:p.title, placeholder:'▶ drop preview', style:'height:420px;'})+
+        '<button id="closeModalBtn" title="Close" style="position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:999px; border:none; background:rgba(8,8,10,0.6); backdrop-filter:blur(6px); color:#fff; cursor:pointer; font-size:1rem; line-height:1;">✕</button>'+
+      '</div>'+
+      '<div style="padding:40px;">'+
+        '<h2 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:2rem; letter-spacing:-0.02em; margin:0 0 18px; color:var(--text);">'+p.title+'</h2>'+
+        '<div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:26px;">'+p.tags.map(function(t){ return '<span class="tag-pill">'+t+'</span>'; }).join('')+'</div>'+
+        '<p style="font-size:1.02rem; line-height:1.75; color:var(--text2); margin:0 0 24px; font-family:\'Space Grotesk\',sans-serif; font-weight:400; white-space:pre-wrap;">'+(p.longDescription||p.description)+'</p>'+
+        (p.credit ? '<p style="margin:0 0 24px; font-family:\'JetBrains Mono\',monospace; font-size:.72rem; line-height:1.5; color:var(--text4);">// '+p.credit+'</p>' : '')+
+        ((p.links && p.links.length) ? '<div style="display:flex; gap:12px; flex-wrap:wrap; padding-top:8px; border-top:1px solid rgba(var(--rgb),0.07); margin-top:4px;">'+p.links.map(function(l){ return '<a href="'+l.url+'" target="_blank" style="font-family:\'Space Grotesk\',sans-serif; font-weight:500; font-size:.86rem; color:var(--text); background:var(--panel); border:1px solid rgba(var(--rgb),0.12); padding:10px 18px; border-radius:999px; display:inline-flex; align-items:center; gap:7px; margin-top:20px;">'+l.label+' ↗</a>'; }).join('')+'</div>' : '')+
+      '</div>';
+    modal.style.display = 'flex';
+    document.getElementById('closeModalBtn').addEventListener('click', closeProjectModal);
+  }
+  function closeProjectModal(){ modal.style.display = 'none'; }
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeProjectModal(); });
+
+  /* ---------- render: case studies ---------- */
+  var caseStudyListEl = document.getElementById('caseStudyList');
+  caseStudies.forEach(function(c, i){
+    var btn = document.createElement('button');
+    btn.setAttribute('data-reveal', '');
+    btn.style.cssText = 'text-align:left; cursor:pointer; transition:border-color .2s; display:grid; grid-template-columns:300px 1fr; gap:32px; align-items:stretch; border:1px solid rgba(var(--rgb),0.08); border-radius:14px; overflow:hidden; background:var(--panel); padding:0; font-family:inherit; width:100%;';
+    btn.innerHTML = imgSlot({src:c.img, alt:c.title, placeholder:'▶ drop cover', style:'min-height:220px;'})+
+      '<div style="padding:32px 32px 32px 8px; display:flex; flex-direction:column; justify-content:center;">'+
+        '<p style="font-family:\'JetBrains Mono\',monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:0 0 12px;">'+c.tagline+'</p>'+
+        '<h2 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:1.6rem; letter-spacing:-0.02em; margin:0 0 14px; color:var(--text);">'+c.title+'</h2>'+
+        '<p style="margin:0 0 22px; font-size:.95rem; line-height:1.6; color:var(--text3);">'+c.summary+'</p>'+
+        '<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">'+
+          '<div style="display:flex; gap:8px; flex-wrap:wrap;">'+c.tags.map(function(t){ return '<span class="tag-pill">'+t+'</span>'; }).join('')+'</div>'+
+          '<span style="font-family:\'Space Grotesk\',sans-serif; font-size:.82rem; color:var(--accent); white-space:nowrap;">Read case study →</span>'+
+        '</div>'+
+      '</div>';
+    btn.addEventListener('click', function(){ state.openCase = i; renderCaseStudyView(); });
+    caseStudyListEl.appendChild(btn);
+  });
+
+  function renderCaseStudyView(){
+    var listV = document.getElementById('csListView');
+    var detailV = document.getElementById('csDetailView');
+    if (state.openCase === null){
+      listV.style.display = '';
+      detailV.style.display = 'none';
+      return;
+    }
+    listV.style.display = 'none';
+    detailV.style.display = '';
+    var c = caseStudies[state.openCase];
+    var blocksHtml = c.blocks.map(function(b){
+      if (b.type === 'heading') return '<h2 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:1.5rem; letter-spacing:-0.02em; color:var(--text); margin:40px 0 4px;">'+b.text+'</h2>';
+      if (b.type === 'text') return '<p style="font-size:1rem; line-height:1.75; color:var(--text3); margin:0 0 12px;">'+b.text+'</p>';
+      if (b.type === 'image') return '<div style="border-radius:14px; overflow:hidden; border:1px solid rgba(var(--rgb),0.08); margin:16px 0 24px;">'+imgSlot({src:b.src, alt:b.label, placeholder:b.label, style:'height:360px;'})+'</div>';
+      if (b.type === 'video') return '<div style="border-radius:14px; overflow:hidden; border:1px solid rgba(91,140,255,0.25); margin:16px 0 24px; position:relative; background:#000;">'+imgSlot({src:b.src, alt:b.label, placeholder:b.label, style:'height:400px;'})+'<span style="position:absolute; top:14px; left:14px; font-family:\'JetBrains Mono\',monospace; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); background:rgba(8,8,10,0.7); backdrop-filter:blur(6px); padding:5px 11px; border-radius:999px; pointer-events:none;">▶ Video</span></div>';
+      return '';
+    }).join('');
+    var bodyHtml = c.writeupReady && c.blocks.length
+      ? '<div style="display:flex; flex-direction:column; gap:8px;">'+blocksHtml+'</div>'
+      : '<div style="border:1px dashed rgba(var(--rgb),0.16); border-radius:14px; padding:56px 48px; text-align:center;">'+
+          '<p style="font-family:\'JetBrains Mono\',monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">Write-up in progress</p>'+
+          '<p style="font-family:\'Space Grotesk\',sans-serif; font-size:1.05rem; line-height:1.6; color:var(--text3); margin:0; max-width:420px; margin-left:auto; margin-right:auto;">I\'m still putting the full case study together — check back soon for the complete breakdown.</p>'+
+        '</div>';
+    detailV.innerHTML =
+      '<button id="closeCaseBtn" style="background:none; border:none; cursor:pointer; padding:0; font-family:\'Space Grotesk\',sans-serif; font-size:.86rem; color:var(--text3); display:inline-flex; align-items:center; gap:8px; margin-bottom:36px;">← All case studies</button>'+
+      '<p style="font-family:\'JetBrains Mono\',monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;">'+c.tagline+'</p>'+
+      '<h1 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:clamp(2.2rem,6vw,3.4rem); letter-spacing:-0.03em; margin:0 0 20px; color:var(--text);">'+c.title+'</h1>'+
+      '<div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:36px;">'+c.tags.map(function(t){ return '<span class="tag-pill">'+t+'</span>'; }).join('')+'</div>'+
+      '<div style="border-radius:14px; overflow:hidden; border:1px solid rgba(var(--rgb),0.08); margin-bottom:40px;">'+imgSlot({src:c.img, alt:c.title, placeholder:'▶ drop cover image', style:'height:560px;'})+'</div>'+
+      '<p style="font-size:1.15rem; line-height:1.6; color:var(--text2); margin:0 0 48px; font-family:\'Space Grotesk\',sans-serif; font-weight:400;">'+c.summary+'</p>'+
+      bodyHtml;
+    document.getElementById('closeCaseBtn').addEventListener('click', function(){ state.openCase = null; renderCaseStudyView(); window.scrollTo(0,0); });
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- render: experience ---------- */
+  var expListEl = document.getElementById('experienceList');
+  experiences.forEach(function(e, i){
+    var row = document.createElement('div');
+    row.setAttribute('data-reveal', '');
+    row.style.cssText = 'display:grid; grid-template-columns:56px 1fr; gap:24px; padding:36px 0; border-top:1px solid rgba(var(--rgb),0.08);';
+    row.innerHTML =
+      '<div style="display:flex; flex-direction:column; align-items:center; gap:8px;">'+
+        imgSlot({src:e.logo, alt:e.org, placeholder:'logo', style:'width:56px; height:56px; border-radius:12px;'})+
+        '<span style="font-family:\'JetBrains Mono\',monospace; font-size:.72rem; color:var(--faint);">'+String(i+1).padStart(2,'0')+'</span>'+
+      '</div>'+
+      '<div>'+
+        '<div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:6px;">'+
+          '<h3 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:1.3rem; letter-spacing:-0.01em; margin:0; color:var(--text);">'+e.role+'</h3>'+
+          '<span style="font-family:\'JetBrains Mono\',monospace; font-size:.62rem; padding:3px 9px; border-radius:999px; '+(typeColor[e.type]||'color:var(--text3); border:1px solid rgba(var(--rgb),0.2);')+'">'+e.type+'</span>'+
+        '</div>'+
+        '<p style="font-family:\'JetBrains Mono\',monospace; color:var(--text4); margin:0 0 18px; font-size:.76rem;">'+e.org+' · '+e.period+'</p>'+
+        '<ul style="margin:0; padding:0; display:flex; flex-direction:column; gap:10px;">'+e.bullets.map(function(b){ return '<li style="display:flex; gap:12px; color:var(--text3); font-size:.9rem; line-height:1.5;"><span style="color:var(--accent); flex-shrink:0;">→</span>'+b+'</li>'; }).join('')+'</ul>'+
+      '</div>';
+    expListEl.appendChild(row);
+  });
+
+  /* ---------- render: skills ---------- */
+  var skillCatsEl = document.getElementById('skillCats');
+  skillCats.forEach(function(cat){
+    var div = document.createElement('div');
+    div.setAttribute('data-reveal', '');
+    div.style.cssText = 'border:1px solid rgba(var(--rgb),0.08); border-radius:14px; padding:26px; background:var(--panel);';
+    div.innerHTML = '<p style="font-family:\'JetBrains Mono\',monospace; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); margin:0 0 18px;">'+cat.label+'</p>'+
+      '<div style="display:flex; gap:9px; flex-wrap:wrap;">'+cat.items.map(function(item){ return '<span style="border:1px solid rgba(var(--rgb),0.1); padding:6px 13px; border-radius:999px; color:var(--text2); font-size:.82rem;">'+item+'</span>'; }).join('')+'</div>';
+    skillCatsEl.appendChild(div);
+  });
+
+  /* ---------- render: facts ---------- */
+  var factsGridEl = document.getElementById('factsGrid');
+  facts.forEach(function(f){
+    var d = document.createElement('div');
+    d.style.cssText = 'background:var(--panel); padding:22px 24px;';
+    d.innerHTML = '<p style="font-family:\'JetBrains Mono\',monospace; font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--text4); margin:0 0 7px;">'+f.key+'</p>'+
+      '<p style="margin:0; font-size:.95rem; color:var(--text);">'+f.value+'</p>';
+    factsGridEl.appendChild(d);
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  var io = null;
+  function initReveal(){
+    if (io) io.disconnect();
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- hero parallax ---------- */
+  var raf = null;
+  window.addEventListener('scroll', function(){
+    if (raf) return;
+    raf = requestAnimationFrame(function(){
+      raf = null;
+      var vh = window.innerHeight, sy = window.scrollY;
+      var hero = document.getElementById('heroInner');
+      if (hero && state.view === 'home'){
+        var p = Math.min(sy/(vh*0.62), 1);
+        hero.style.transform = 'scale('+(1-p*0.07)+')';
+        hero.style.opacity = String(Math.max(1-p*1.18, 0));
+      }
+    });
+  }, { passive:true });
+
+  /* ---------- footer clock ---------- */
+  function tickClock(){
+    var el = document.getElementById('clock');
+    if (!el) return;
+    var t = new Date().toLocaleTimeString('en-US', { timeZone:'America/Toronto', hour12:false });
+    el.textContent = t + ' EST';
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  /* ---------- init ---------- */
+  applyTheme();
+  go('home');
+})();
+</script>
+</body>
+</html>
