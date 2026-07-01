@@ -1,3 +1,3 @@
 # Personal Portfolio Website
-This is my Portfolio website. Currently, I am hosting it through GitHub, but I will soon purchase a domain.
+This is my Portfolio website.
 Programmed in HTML
