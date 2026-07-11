@@ -559,15 +559,77 @@
     grid.appendChild(card);
   });
 
-  /* ---------- project modal ---------- */
+/* ---------- project modal---------- */
   var modal = document.getElementById('projectModal');
   var modalCard = document.getElementById('projectModalCard');
+  var galleryImages = [];
+  var galleryIndex = 0;
+  var galleryTimer = null;
+
+  function testImage(src){
+    return new Promise(function(resolve){
+      var im = new Image();
+      im.onload = function(){ resolve(src); };
+      im.onerror = function(){ resolve(null); };
+      im.src = src;
+    });
+  }
+  function detectGallery(mainSrc){
+    var dot = mainSrc.lastIndexOf('.');
+    var base = mainSrc.slice(0, dot), ext = mainSrc.slice(dot);
+    var candidates = [mainSrc];
+    for (var n = 2; n <= 6; n++) candidates.push(base + '-' + n + ext);
+    return Promise.all(candidates.map(testImage)).then(function(results){
+      return results.filter(Boolean);
+    });
+  }
+
+  function renderGalleryMain(){
+    var stage = document.getElementById('galleryStage');
+    if (!stage) return;
+    var src = galleryImages[galleryIndex];
+    stage.innerHTML = '<img src="'+src+'" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">';
+    var dots = document.getElementById('galleryDots');
+    if (dots){
+      dots.querySelectorAll('button').forEach(function(d, idx){
+        d.style.background = idx === galleryIndex ? 'var(--accent)' : 'rgba(255,255,255,0.35)';
+        d.style.width = idx === galleryIndex ? '18px' : '6px';
+      });
+    }
+  }
+  function galleryGo(i){
+    galleryIndex = (i + galleryImages.length) % galleryImages.length;
+    renderGalleryMain();
+    restartAutoplay();
+  }
+  function galleryNext(){ galleryGo(galleryIndex + 1); }
+  function galleryPrev(){ galleryGo(galleryIndex - 1); }
+  function restartAutoplay(){
+    if (galleryTimer) clearInterval(galleryTimer);
+    if (galleryImages.length > 1){
+      galleryTimer = setInterval(function(){ galleryIndex = (galleryIndex + 1) % galleryImages.length; renderGalleryMain(); }, 4000);
+    }
+  }
+  function stopAutoplay(){
+    if (galleryTimer) clearInterval(galleryTimer);
+    galleryTimer = null;
+  }
+
   function openProjectModal(i){
     var p = projects[i];
+    galleryImages = [p.img];
+    galleryIndex = 0;
     modalCard.innerHTML =
       '<div style="position:relative; border-bottom:1px solid rgba(var(--rgb),0.07);">'+
-        imgSlot({src:p.img, alt:p.title, placeholder:'▶ drop preview', style:'height:420px;'})+
-        '<button id="closeModalBtn" title="Close" style="position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:999px; border:none; background:rgba(8,8,10,0.6); backdrop-filter:blur(6px); color:#fff; cursor:pointer; font-size:1rem; line-height:1;">✕</button>'+
+        '<div id="galleryStage" style="height:420px; background:repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(var(--rgb),0.025) 12px, rgba(var(--rgb),0.025) 24px);">'+
+          imgSlot({src:p.img, alt:p.title, placeholder:'▶ drop preview', style:'height:420px;'})+
+        '</div>'+
+        '<button id="closeModalBtn" title="Close" style="position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:999px; border:none; background:rgba(8,8,10,0.6); backdrop-filter:blur(6px); color:#fff; cursor:pointer; font-size:1rem; line-height:1; z-index:3;">✕</button>'+
+        '<div id="galleryNav" style="display:none;">'+
+          '<button id="galleryPrevBtn" title="Previous image" style="position:absolute; top:50%; left:14px; transform:translateY(-50%); width:38px; height:38px; border-radius:999px; border:none; background:rgba(8,8,10,0.55); backdrop-filter:blur(6px); color:#fff; cursor:pointer; font-size:1.1rem; line-height:1; z-index:3;">‹</button>'+
+          '<button id="galleryNextBtn" title="Next image" style="position:absolute; top:50%; right:14px; transform:translateY(-50%); width:38px; height:38px; border-radius:999px; border:none; background:rgba(8,8,10,0.55); backdrop-filter:blur(6px); color:#fff; cursor:pointer; font-size:1.1rem; line-height:1; z-index:3;">›</button>'+
+          '<div id="galleryDots" style="position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:3;"></div>'+
+        '</div>'+
       '</div>'+
       '<div style="padding:40px;">'+
         '<h2 style="font-family:\'Space Grotesk\',sans-serif; font-weight:600; font-size:2rem; letter-spacing:-0.02em; margin:0 0 18px; color:var(--text);">'+p.title+'</h2>'+
@@ -578,8 +640,34 @@
       '</div>';
     modal.style.display = 'flex';
     document.getElementById('closeModalBtn').addEventListener('click', closeProjectModal);
+
+    detectGallery(p.img).then(function(imgs){
+      if (!imgs.length) return;
+      galleryImages = imgs;
+      galleryIndex = 0;
+      renderGalleryMain();
+      if (imgs.length > 1){
+        var nav = document.getElementById('galleryNav');
+        var dots = document.getElementById('galleryDots');
+        if (nav) nav.style.display = 'block';
+        if (dots){
+          dots.innerHTML = imgs.map(function(_, idx){
+            return '<button data-idx="'+idx+'" style="width:6px; height:6px; border-radius:999px; border:none; background:rgba(255,255,255,0.35); cursor:pointer; padding:0; transition:width .2s, background .2s;"></button>';
+          }).join('');
+          dots.querySelectorAll('button').forEach(function(d){
+            d.addEventListener('click', function(){ galleryGo(parseInt(d.getAttribute('data-idx'), 10)); });
+          });
+        }
+        var prevBtn = document.getElementById('galleryPrevBtn');
+        var nextBtn = document.getElementById('galleryNextBtn');
+        if (prevBtn) prevBtn.addEventListener('click', galleryPrev);
+        if (nextBtn) nextBtn.addEventListener('click', galleryNext);
+        renderGalleryMain();
+        restartAutoplay();
+      }
+    });
   }
-  function closeProjectModal(){ modal.style.display = 'none'; }
+  function closeProjectModal(){ modal.style.display = 'none'; stopAutoplay(); }
   modal.addEventListener('click', function(e){ if (e.target === modal) closeProjectModal(); });
 
   /* ---------- render: case studies ---------- */
