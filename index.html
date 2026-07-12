@@ -492,7 +492,7 @@
     '</div>';
   }
 
-  function go(view){
+  function go(view, skipPush){
     state.view = view;
     state.openCase = null;
     document.querySelectorAll('section[data-screen]').forEach(function(s){
@@ -502,9 +502,24 @@
       b.classList.toggle('active', b.getAttribute('data-view') === view);
     });
     window.scrollTo(0,0);
+    if (!skipPush){
+      var path = view === 'home' ? '/' : '/' + view;
+      history.pushState({ view: view }, '', path);
+    }
     if (view === 'casestudies') renderCaseStudyView();
     requestAnimationFrame(initReveal);
   }
+
+  function pathToView(pathname){
+    var clean = pathname.replace(/^\/|\/$/g, '');
+    var valid = ['home','about','experience','skills','work','casestudies','contact'];
+    return valid.indexOf(clean) !== -1 ? clean : 'home';
+  }
+
+  window.addEventListener('popstate', function(e){
+    var view = (e.state && e.state.view) || pathToView(location.pathname);
+    go(view, true);
+  });
 
   /* ---------- render: nav ---------- */
   var navItemsEl = document.getElementById('navItems');
@@ -812,7 +827,12 @@
 
   /* ---------- init ---------- */
   applyTheme();
-  go('home');
+  var redirectPath = sessionStorage.getItem('redirect_path');
+  if (redirectPath){
+    sessionStorage.removeItem('redirect_path');
+    history.replaceState(null, '', redirectPath);
+  }
+  go(pathToView(location.pathname), true);
 })();
 </script>
 </body>
