@@ -481,9 +481,9 @@
   ];
 
   /* ---------- state stuff ---------- */ 
-var state = { view:'home', theme: readTheme(), openCase:null };
+/* var state = { view:'home', theme: readTheme(), openCase:null };
 
-/* function readTheme(){
+ function readTheme(){
   try { return localStorage.getItem('za-theme') || 'dark'; } catch(e){ return 'dark'; }
 }
 function applyTheme(){
@@ -495,7 +495,7 @@ document.getElementById('themeToggle').addEventListener('click', function(){
   try { localStorage.setItem('za-theme', state.theme); } catch(e){}
   applyTheme();
 }); 
-lol I couldve commented like that instead of the stupid <<!-- thing */
+lol I couldve commented like that instead of the stupid <<!-- thing
 
 js
 var state = { view:'home', theme:'dark', openCase:null };
@@ -503,7 +503,14 @@ var state = { view:'home', theme:'dark', openCase:null };
 function applyTheme(){
   document.documentElement.setAttribute('data-theme', state.theme);
 }
+*/
+  var state = { view:'home', theme:'dark', openCase:null };
 
+  function applyTheme(){
+    document.documentElement.setAttribute('data-theme', state.theme);
+  }
+
+  
   function imgSlot(opts){
     // opts: {src, alt, placeholder, style}
     return '<div class="img-slot" style="'+(opts.style||'')+'">'+
